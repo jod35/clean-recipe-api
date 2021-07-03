@@ -8,9 +8,23 @@ from pydantic import BaseModel
 from typing import List
 from passlib.hash import pbkdf2_sha256
 from fastapi_jwt_auth import AuthJWT
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app=FastAPI()
+
+ORIGINS=[
+    'http://localhost:3000',
+    'localhost:3000',
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ORIGINS,
+    allow_headers=['*'],
+    allow_credentials=True
+)
 
 class UserSchema(BaseModel):
     username:str
